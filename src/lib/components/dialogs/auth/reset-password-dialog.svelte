@@ -29,7 +29,7 @@
 		<Dialog.Header>
 			<Dialog.Title>Reset Password</Dialog.Title>
 			<Dialog.Description>
-        Enter your email below to recieve a verification code to reset your password.
+				Enter your email below to recieve a verification code to reset your password.
 			</Dialog.Description>
 		</Dialog.Header>
 		<FormComponent

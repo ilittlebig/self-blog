@@ -24,7 +24,7 @@
 		<Dialog.Header>
 			<Dialog.Title>Enter Verification Code</Dialog.Title>
 			<Dialog.Description>
-        Enter the 6-digit code sent to your email to continue.
+				Enter the 6-digit code sent to your email to continue.
 			</Dialog.Description>
 		</Dialog.Header>
 		<FormComponent

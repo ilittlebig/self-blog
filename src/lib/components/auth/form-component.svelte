@@ -58,27 +58,27 @@
 		children,
 	}: Props = $props();
 
-  const handleValidForm = async (form: SuperValidated<Infer<typeof schema>>) => {
-    const formData = form.data;
-    try {
-      await onsubmit(formData);
+	const handleValidForm = async (form: SuperValidated<Infer<typeof schema>>) => {
+		const formData = form.data;
+		try {
+			await onsubmit(formData);
 			onsuccess?.();
-    } catch (err: any) {
-      setError(form, fields[0].name, err.message);
-    }
-  };
+		} catch (err: any) {
+			setError(form, fields[0].name, err.message);
+		}
+	};
 
 	const form = superForm(data, {
-    SPA: true,
-    resetForm: false,
-    clearOnSubmit: "errors",
-    validators: zodClient(schema),
-    async onUpdate({ form }) {
-      if (form.valid) await handleValidForm(form);
-    }
-  });
+		SPA: true,
+		resetForm: false,
+		clearOnSubmit: "errors",
+		validators: zodClient(schema),
+		async onUpdate({ form }) {
+			if (form.valid) await handleValidForm(form);
+		}
+	});
 
-  const { form: formData, enhance, submitting } = form;
+	const { form: formData, enhance, submitting } = form;
 </script>
 
 <form class="grid gap-4" method="POST" use:enhance>

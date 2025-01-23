@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-	import type { AuthTOTPSetupDetails } from "@ilittlebig/easy-auth";
 	import QRCode from "qrcode";
+	import type { AuthTOTPSetupDetails } from "@ilittlebig/easy-auth";
 	import { handleChallengeResponse } from "$lib/services/auth-service";
 	import { totpSetupDetailsStore, usernameStore } from "$lib/stores/auth-store.svelte";
 	import { totpCodeFormSchema } from "$lib/schemas/auth";
@@ -14,16 +14,16 @@
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import FormComponent from "$lib/components/auth/form-component.svelte";
 
-  let qrCodeUrl = $state("");
-  let secret = $state("");
+	let qrCodeUrl = $state("");
+	let secret = $state("");
 
 	interface QRCodeProps {
 		totpSetupDetails: AuthTOTPSetupDetails;
 		username: string;
 	}
 
-  // Formats the secret into a 4-digit space-separated string
-  const formatSecret = (secret: string) => secret.match(/.{1,4}/g)?.join(" ");
+	// Formats the secret into a 4-digit space-separated string
+	const formatSecret = (secret: string) => secret.match(/.{1,4}/g)?.join(" ");
 
 	const generateQRCode = async (uri: string): Promise<string> => {
 		return QRCode.toDataURL(uri, {
@@ -55,15 +55,15 @@
 
 	const data = { code: "" };
 
-  $effect(() => {
-    if (!totpSetupDetailsStore.value) return;
-    setupQRCode({
-      totpSetupDetails: totpSetupDetailsStore.value,
-      username: usernameStore.value
+	$effect(() => {
+		if (!totpSetupDetailsStore.value) return;
+		setupQRCode({
+			totpSetupDetails: totpSetupDetailsStore.value,
+			username: usernameStore.value
 		}).then(({ qrCodeUrl: url, sharedSecret }) => {
 			[qrCodeUrl, secret] = [url, sharedSecret];
 		});
-  });
+	});
 </script>
 
 <Dialog.Root bind:open={totpSetupDialog.open}>
@@ -71,16 +71,16 @@
 		<Dialog.Header>
 			<Dialog.Title>Setup MFA</Dialog.Title>
 			<Dialog.Description>
-        Scan the QR code with any authenticator app and enter the code below.
+				Scan the QR code with any authenticator app and enter the code below.
 			</Dialog.Description>
 		</Dialog.Header>
 
-    <div class="flex justify-center">
-      <img src={qrCodeUrl} width="228" height="228" alt="QR Code" />
-    </div>
+		<div class="flex justify-center">
+			<img src={qrCodeUrl} width="228" height="228" alt="QR Code" />
+		</div>
 
-    <div class="flex justify-center">
-      <Tooltip.Provider>
+		<div class="flex justify-center">
+			<Tooltip.Provider>
 				<Tooltip.Root>
 					<Tooltip.Trigger class={buttonVariants({ variant: "link" })}>
 						Can't scan the QR code?
@@ -90,7 +90,7 @@
 					</Tooltip.Content>
 				</Tooltip.Root>
 		 </Tooltip.Provider>
-    </div>
+		</div>
 
 		<FormComponent
 			{data} 

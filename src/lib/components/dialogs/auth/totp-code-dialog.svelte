@@ -21,7 +21,7 @@
 		<Dialog.Header>
 			<Dialog.Title>Enter MFA Code</Dialog.Title>
 			<Dialog.Description>
-        Enter the 6-digit code from your authenticator app to continue.
+				Enter the 6-digit code from your authenticator app to continue.
 			</Dialog.Description>
 		</Dialog.Header>
 		<FormComponent
