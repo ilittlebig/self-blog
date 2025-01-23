@@ -16,6 +16,7 @@ import {
 	confirmResetPassword,
 	confirmSignIn,
 	signOut,
+	CookieStorage,
 	type SignInInput,
 	type ResetPasswordInput,
 	type ConfirmResetPasswordInput,
@@ -105,4 +106,5 @@ export const configureEasyAuth = () => {
 			}
 		}
 	});
+	EasyAuth.setKeyValueStorage(new CookieStorage());
 }
