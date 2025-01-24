@@ -8,7 +8,7 @@
 import { env } from "$env/dynamic/private";
 import { json } from "@sveltejs/kit";
 import { GetCommand } from "@aws-sdk/lib-dynamodb";
-import { ddb } from "$lib/aws/dynamo";
+import { ddb } from "$lib/utils/dynamo";
 
 const TABLE_NAME = env.BLOG_POSTS_TABLE_NAME;
 
