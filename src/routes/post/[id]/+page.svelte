@@ -32,6 +32,9 @@
 		<div class="post-header">
 			<h1 class="text-2xl md:text-4xl font-bold leading-tight">{post.title}</h1>
 			<p class="text-muted-foreground text-sm md:text-base mt-1">{formatDate(post.created_at)}</p>
+			<p class="text-muted-foreground text-sm md:text-base">
+				By {post.author}
+			</p>
 		</div>
 		<div class="post-content prose prose-sm md:prose-base leading-relaxed prose-headings:mt-6 prose-img:rounded-lg">
 			{@html post.content}
