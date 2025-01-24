@@ -19,7 +19,7 @@ const request = async (method: string, endpoint: string, body?: any, requireAuth
 		headers["Authorization"] = accessToken;
 	}
 
-	const response = await fetch(baseUrl + "/api" + endpoint, {
+	const response = await fetch(baseUrl + "/backend" + endpoint, {
 		method,
 		headers,
 		body: body ? JSON.stringify(body) : undefined,
