@@ -36,6 +36,9 @@
 		"@aws-sdk/client-dynamodb": "^3.733.0",
 		"@aws-sdk/lib-dynamodb": "^3.733.0",
 		"@ilittlebig/easy-auth": "^0.0.9",
+		"@types/jsonwebtoken": "^9.0.8",
+		"jsonwebtoken": "^9.0.2",
+		"jwks-rsa": "^3.1.0",
 		"qrcode": "^1.5.4"
 	}
 }

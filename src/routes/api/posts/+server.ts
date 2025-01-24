@@ -5,10 +5,11 @@
  * Created: 2025-01-23
  */
 
-import { json } from "@sveltejs/kit";
 import { env } from "$env/dynamic/private";
-import { ddb } from "$lib/aws/dynamo";
+import { json } from "@sveltejs/kit";
 import { ScanCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { extractAndValidateToken } from "$lib/auth-utils";
+import { ddb } from "$lib/aws/dynamo";
 
 const TABLE_NAME = env.BLOG_POSTS_TABLE_NAME;
 
@@ -23,6 +24,9 @@ export const GET = async () => {
 
 export const POST = async ({ request }) => {
 	try {
+		const authHeader = request.headers.get("Authorization");
+		await extractAndValidateToken(authHeader);
+
 		const body = await request.json();
 		const newPost = {
 			id: Date.now().toString(),
