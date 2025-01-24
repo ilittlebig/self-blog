@@ -8,7 +8,6 @@
 import { getCurrentSession } from "@ilittlebig/easy-auth";
 
 const request = async (method: string, endpoint: string, body?: any, requireAuth: boolean = true) => {
-	const baseUrl = typeof window !== "undefined" && window.location.origin;
 	let headers: Record<string, string> = {
 		"Content-Type": "application/json",
 	};
@@ -19,7 +18,7 @@ const request = async (method: string, endpoint: string, body?: any, requireAuth
 		headers["Authorization"] = accessToken;
 	}
 
-	const response = await fetch(baseUrl + "/backend" + endpoint, {
+	const response = await fetch("/api" + endpoint, {
 		method,
 		headers,
 		body: body ? JSON.stringify(body) : undefined,

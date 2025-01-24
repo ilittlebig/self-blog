@@ -15,6 +15,7 @@ const TABLE_NAME = env.BLOG_POSTS_TABLE_NAME;
 
 export const GET = async () => {
 	try {
+		console.log("TABLE_NAME =", TABLE_NAME);
 		const result = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
 		return json(result.Items, { status: 200 });
 	} catch (err: any) {
