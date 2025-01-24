@@ -8,7 +8,7 @@
 import { env } from "$env/dynamic/private";
 import { json } from "@sveltejs/kit";
 import { ScanCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { extractAndValidateToken } from "$lib/auth-utils";
+import { extractAndValidateToken } from "$lib/server-utils";
 import { ddb } from "$lib/aws/dynamo";
 
 const TABLE_NAME = env.BLOG_POSTS_TABLE_NAME;
