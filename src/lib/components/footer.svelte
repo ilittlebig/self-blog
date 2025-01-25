@@ -3,7 +3,7 @@
 	import { Separator } from "$lib/components/ui/separator";
 </script>
 
-<footer class="flex flex-col gap-y-8 py-12 mx-auto max-w-6xl w-full px-4 xl:px-0">
+<footer class="flex flex-col gap-y-8 py-12 mx-auto max-w-4xl w-full px-4 xl:px-0">
 	<Separator class="md:block hidden" />
 	<div class="flex justify-between">
 		<p class="text-muted-foreground">

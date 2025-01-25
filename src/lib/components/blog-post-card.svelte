@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { ExternalLink } from "lucide-svelte";
 	import { formatDate } from "$lib/utils/date";
+	import { Badge } from "$lib/components/ui/badge";
 	import type { Post } from "types/post";
 
 	interface Props {
@@ -11,7 +11,7 @@
 
 <a
 	href={"/post/" + post.id}
-	class="flex flex-col w-[450px] rounded-lg border shadow-md hover:shadow-lg transition-shadow"
+	class="flex flex-col w-[450px] rounded-lg border group"
 	aria-label={"Read more about " + post.title}
 >
 	<img
@@ -19,16 +19,16 @@
 		alt="Blog post thumnail"
 		class="rounded-t-lg"
 	/>
-	<div class="flex flex-col gap-y-2 p-4">
-		<div class="flex flex-col">
-			<h1 class="text-xl font-bold text-primary">{post.title}</h1>
-			<p class="text-sm text-muted-foreground">{formatDate(post.created_at)}</p>
+	<div class="flex flex-col gap-y-3 p-6">
+		<div class="flex flex-wrap gap-1">
+			{#each { length: 4 }}
+				<Badge variant="secondary">Frontend</Badge>
+			{/each}
 		</div>
-		<div class="flex items-center gap-x-2 w-fit group">
-			<p class="text-muted-foreground group-hover:text-primary">
-				Read More
-			</p>
-			<ExternalLink size="18" class="text-muted-foreground group-hover:text-primary" />
+		<div class="flex flex-col">
+			<h1 class="text-xl font-bold text-primary group-hover:underline">{post.title}</h1>
+			<p class="text-sm text-muted-foreground">{formatDate(post.created_at)}</p>
+			<p class="text-sm text-muted-foreground">By {post.author}</p>
 		</div>
 	</div>
 </a>

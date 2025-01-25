@@ -8,20 +8,46 @@
 	let posts: Post[] | undefined = $state();
 	onMount(async () => {
 		const fetchedPosts = await GET("/posts");
-		posts = fetchedPosts.sort((a, b) => {
+		posts = fetchedPosts.sort((a: Post, b: Post) => {
 			return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 		});
 	});
 </script>
 
-<div class="flex flex-col gap-4 p-6">
-	{#if posts}
-		{#each posts as post}
-			<BlogPostCard {post} />
-		{/each}
-	{:else}
-		{#each { length: 3 }}
-			<BlogPostSkeletonCard />
-		{/each}
-	{/if}
-</div>
+<section class="py-16">
+	<img
+		src="/photo.jpeg"
+		alt="Hero Background"
+		class="w-full h-[300px] rounded-lg object-cover mb-10"
+	/>
+	<div class="max-w-4xl mx-auto text-center">
+		<h1 class="text-5xl font-title tracking-wide font-bold">
+			Building the
+			<span class="font-extrabold text-primary">Future</span>
+			of Web Development Together
+		</h1>
+		<p class="mt-4 text-lg text-muted-foreground">
+			Inspiring developers with cutting-edge tutorials, tools, and ideas for the modern web.
+		</p>
+	</div>
+</section>
+
+<section class="py-16">
+	<div class="max-w-4xl mx-auto text-center px-4">
+		<h2 class="text-3xl font-bold tracking-wide">Latest Blog Posts</h2>
+		<p class="text-muted-foreground mt-3 text-base">
+			Check out our latest tutorials and insights on web development, Svelte, and more.
+		</p>
+	</div>
+	<div class="grid grid-cols-1 gap-6 px-6 mt-10 md:grid-cols-2 lg:gap-8 lg:px-0">
+		{#if posts}
+			{#each posts as post}
+				<BlogPostCard {post} />
+			{/each}
+		{:else}
+			{#each { length: 4 } as _}
+				<BlogPostSkeletonCard />
+			{/each}
+		{/if}
+	</div>
+</section>
