@@ -7,11 +7,14 @@
 
 	let posts: Post[] | undefined = $state();
 	onMount(async () => {
-		posts = await GET("/posts");
+		const fetchedPosts = await GET("/posts");
+		posts = fetchedPosts.sort((a, b) => {
+			return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+		});
 	});
 </script>
 
-<div class="flex flex-col gap-y-4">
+<div class="flex flex-col gap-4 p-6">
 	{#if posts}
 		{#each posts as post}
 			<BlogPostCard {post} />
