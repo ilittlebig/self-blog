@@ -19,26 +19,26 @@
 	});
 </script>
 
-<section class="py-16">
+<section class="py-16 px-4 lg:px-0">
 	<img
 		src="/photo.jpeg"
 		alt="Hero Background"
-		class="w-full h-[300px] rounded-lg object-cover mb-10"
+		class="w-full h-[200px] md:h-[300px] rounded-lg object-cover mb-8 md:mb-10"
 	/>
 	<div class="max-w-4xl mx-auto text-center">
-		<h1 class="text-5xl font-title tracking-wide font-bold">
+		<h1 class="text-3xl md:text-5xl font-title tracking-wide font-bold">
 			Building the
 			<span class="font-extrabold text-primary">Future</span>
 			of Web Development Together
 		</h1>
-		<p class="mt-4 text-lg text-muted-foreground">
+		<p class="mt-4 text-base md:text-lg text-muted-foreground">
 			Inspiring developers with cutting-edge tutorials, tools, and ideas for the modern web.
 		</p>
 	</div>
 </section>
 
-<section class="py-12 w-full">
-	<h2 class="text-3xl font-bold text-center mb-6">Featured Posts</h2>
+<section class="py-12 w-full px-4 md:px-0">
+	<h2 class="text-2xl md:text-3xl font-bold text-center mb-6">Featured Posts</h2>
 	<div class="flex flex-col gap-y-4 max-w-4xl mx-auto">
 		{#if featuredPosts}
 			{#each featuredPosts as featuredPost}
@@ -52,14 +52,14 @@
 	</div>
 </section>
 
-<section class="py-16">
+<section class="max-w-4xl py-16 w-full">
 	<div class="max-w-4xl mx-auto text-center px-4">
-		<h2 class="text-3xl font-bold tracking-wide">Latest Blog Posts</h2>
-		<p class="text-muted-foreground mt-3 text-base">
+		<h2 class="text-2xl md:text-3xl font-bold tracking-wide">Latest Blog Posts</h2>
+		<p class="text-muted-foreground mt-3 text-sm md:text-base">
 			Check out our latest tutorials and insights on web development, Svelte, and more.
 		</p>
 	</div>
-	<div class="grid grid-cols-1 gap-6 px-6 mt-10 md:grid-cols-2 lg:gap-8 lg:px-0">
+	<div class="grid grid-cols-1 gap-4 px-4 mt-10 sm:grid-cols-2 md:gap-6 lg:gap-8 lg:px-0">
 		{#if posts}
 			{#each posts as post}
 				<BlogPostCard {post} />
