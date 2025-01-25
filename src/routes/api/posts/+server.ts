@@ -16,7 +16,14 @@ const TABLE_NAME = env.BLOG_POSTS_TABLE_NAME;
 export const GET = async () => {
 	try {
 		const result = await ddb.send(new ScanCommand({ TableName: TABLE_NAME }));
-		return json(result.Items, { status: 200 });
+		const items = result.Items?.map(item => {
+			const post = { ...item };
+			if (post.tags instanceof Set) {
+				post.tags = Array.from(post.tags);
+			}
+			return post;
+		});
+		return json(items, { status: 200 });
 	} catch (err: any) {
 		return json({ error: err.message }, { status: 500 });
 	}

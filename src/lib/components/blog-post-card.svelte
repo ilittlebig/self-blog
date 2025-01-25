@@ -21,8 +21,8 @@
 	/>
 	<div class="flex flex-col gap-y-3 p-6">
 		<div class="flex flex-wrap gap-1">
-			{#each { length: 4 }}
-				<Badge variant="secondary">Frontend</Badge>
+			{#each post.tags as tag}
+				<Badge variant="secondary">{tag}</Badge>
 			{/each}
 		</div>
 		<div class="flex flex-col">

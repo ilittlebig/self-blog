@@ -11,4 +11,7 @@ export interface Post {
 	author: string;
 	id: string;
 	created_at: string;
+	featured_at?: string;
+	tags: string[];
+	summary: string;
 }

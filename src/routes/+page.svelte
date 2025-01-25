@@ -3,14 +3,19 @@
 	import { GET } from "$lib/services/blog-api";
 	import BlogPostCard from "$lib/components/blog-post-card.svelte";
 	import BlogPostSkeletonCard from "$lib/components/blog-post-skeleton-card.svelte";
+	import FeaturedBlogPostCard from "$lib/components/featured-blog-post-card.svelte";
+	import FeaturedBlogPostSkeletonCard from "$lib/components/featured-blog-post-skeleton-card.svelte";
 	import type { Post } from "types/post";
 
 	let posts: Post[] | undefined = $state();
+	let featuredPosts: any = $state();
+
 	onMount(async () => {
 		const fetchedPosts = await GET("/posts");
 		posts = fetchedPosts.sort((a: Post, b: Post) => {
 			return new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
 		});
+		featuredPosts = await GET("/featured-posts");
 	});
 </script>
 
@@ -32,6 +37,21 @@
 	</div>
 </section>
 
+<section class="py-12 w-full">
+	<h2 class="text-3xl font-bold text-center mb-6">Featured Posts</h2>
+	<div class="flex flex-col gap-y-4 max-w-4xl mx-auto">
+		{#if featuredPosts}
+			{#each featuredPosts as featuredPost}
+				<FeaturedBlogPostCard post={featuredPost} />
+			{/each}
+		{:else}
+			{#each { length: 1 }}
+				<FeaturedBlogPostSkeletonCard />
+			{/each}
+		{/if}
+	</div>
+</section>
+
 <section class="py-16">
 	<div class="max-w-4xl mx-auto text-center px-4">
 		<h2 class="text-3xl font-bold tracking-wide">Latest Blog Posts</h2>
@@ -45,7 +65,7 @@
 				<BlogPostCard {post} />
 			{/each}
 		{:else}
-			{#each { length: 4 } as _}
+			{#each { length: 4 }}
 				<BlogPostSkeletonCard />
 			{/each}
 		{/if}
