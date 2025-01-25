@@ -23,7 +23,12 @@ export const GET = async ({ params }) => {
 		if (!result.Item) {
 			return json({ error: "Post not found" }, { status: 404 });
 		}
-		return json(result.Item, { status: 200 });
+
+		const post = { ...result.Item };
+		if (post.tags instanceof Set) {
+			post.tags = Array.from(post.tags);
+		}
+		return json(post, { status: 200 });
 	} catch (err: any) {
 		return json({ error: err.message }, { status: 500 });
 	}

@@ -19,6 +19,20 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Elias Sjödin | Inspiring Web Development Blog</title>
+	<meta name="description" content="Inspiring developers with cutting-edge tutorials, tools, and ideas for the modern web. Stay updated on Svelte, React, TypeScript, and more." />
+	<meta name="keywords" content="Web Development, Tutorials, Svelte, React, TypeScript, JavaScript, Elias Sjödin" />
+	<meta property="og:title" content="Elias Sjödin | Inspiring Web Development Blog" />
+	<meta property="og:description" content="Inspiring developers with cutting-edge tutorials, tools, and ideas for the modern web." />
+	<meta property="og:image" content="/photo.jpeg" />
+	<meta property="og:type" content="website" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Elias Sjödin | Inspiring Web Development Blog" />
+	<meta name="twitter:description" content="Stay updated with tutorials on Svelte, React, TypeScript, and more." />
+	<meta name="twitter:image" content="/photo.jpeg" />
+</svelte:head>
+
 <section class="py-16 px-4 lg:px-0">
 	<img
 		src="/photo.jpeg"
