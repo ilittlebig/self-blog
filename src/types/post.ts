@@ -19,9 +19,12 @@ export interface Post {
 }
 
 export interface EditablePost {
+	id?: string;
 	title: string;
 	content: string;
 	tags: string[];
+	created_at?: string;
+	featured_at?: string;
 	summary: string;
 	featured?: boolean;
 	thumbnail: File | string;

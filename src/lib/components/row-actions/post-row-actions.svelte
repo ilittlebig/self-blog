@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import { Ellipsis } from "lucide-svelte";
 	import { DELETE, GET } from "$lib/services/blog-api";
 	import { blogStore } from "$lib/stores/blog-store.svelte";
@@ -45,7 +46,9 @@
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content align="end">
 		<DropdownMenu.Label>Actions</DropdownMenu.Label>
-		<DropdownMenu.Item>Edit</DropdownMenu.Item>
+		<DropdownMenu.Item onclick={() => goto("/dashboard/edit/" + post.id)}>
+			Edit
+		</DropdownMenu.Item>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item onclick={() => isOpen = true}>Delete</DropdownMenu.Item>
 	</DropdownMenu.Content>

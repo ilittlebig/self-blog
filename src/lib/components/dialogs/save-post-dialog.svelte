@@ -15,7 +15,7 @@
 
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { POST } from "$lib/services/blog-api";
+	import { POST, PATCH } from "$lib/services/blog-api";
 	import { uploadFileToS3 } from "$lib/utils/s3";
 	import { Button } from "$lib/components/ui/button";
 	import * as Dialog from "$lib/components/ui/dialog";
@@ -41,12 +41,18 @@
 			}
 
 			const featured = savePostDialog.post?.featured;
-			await POST("/posts", {
+			const postPayload = {
 				...savePostDialog.post,
-				created_at: new Date().toISOString(),
-				featured_at: featured ? new Date().toISOString() : undefined,
+				featured_at: featured ? savePostDialog.post?.featured_at || new Date().toISOString() : null,
 				status,
-			});
+			};
+
+			if (savePostDialog.post?.id) {
+				await PATCH(`/posts/${savePostDialog.post.id}`, postPayload);
+			} else {
+				postPayload.created_at = new Date().toISOString();
+				await POST("/posts", postPayload);
+			}
 
 			goto("/dashboard");
 			savePostDialog.open = false;
