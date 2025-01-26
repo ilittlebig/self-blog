@@ -19,9 +19,9 @@
 </script>
 
 <DeleteDialog
-	title="Delete Signup"
-	description="Are you sure you want to delete this signup? This action is irreversible."
-	actionLabel="Delete Signup"
+	title="Delete Post"
+	description="Are you sure you want to delete this post? This action is irreversible."
+	actionLabel="Delete Post"
 	onconfirm={handleDeleteConfirm}
 	bind:open={isOpen}
 />

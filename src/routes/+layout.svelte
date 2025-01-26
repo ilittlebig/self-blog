@@ -20,7 +20,7 @@
 
 <SignOutDialog />
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center h-screen">
 	<Navbar authenticated={data.authenticated} />
 	{@render children()}
 	<Footer />
