@@ -52,7 +52,6 @@ export const validateAccessToken = async (token: string) => {
 		const decoded = jwt.verify(token, signingKey, {
 			issuer: COGNITO_ISSUER,
 		});
-
 		return decoded;
 	} catch (err) {
 		throw new Error("Invalid or expired access token");

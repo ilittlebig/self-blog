@@ -13,16 +13,12 @@
 	import { Button } from "$lib/components/ui/button";
 	import { Checkbox } from "$lib/components/ui/checkbox";
 	import { Textarea } from "$lib/components/ui/textarea";
+	import SavePostDialog, {savePostDialog} from "$lib/components/dialogs/save-post-dialog.svelte";
 	import * as Form from "$lib/components/ui/form";
 	import * as Accordion from "$lib/components/ui/accordion";
 	import * as Tabs from "$lib/components/ui/tabs";
 
 	const DEFAULT_DATA = defaults(zod(formSchema));
-
-	const handleValidForm = async (form: SuperValidated<FormData>) => {
-		const formData = form.data;
-		console.log("valid form data:", formData);
-	}
 
 	const form = superForm<FormData>(DEFAULT_DATA, {
 		SPA: true,
@@ -30,23 +26,42 @@
 		clearOnSubmit: "errors",
 		validators: zodClient(formSchema),
 		async onUpdate({ form }) {
-			console.log("on update", form);
 			if (form.valid) await handleValidForm(form);
 		}
 	});
+	const { form: formData, enhance } = form;
 
-	const { form: formData, enhance, submitting } = form;
+	const handleValidForm = async (form: SuperValidated<FormData>) => {
+		const formData = form.data;
+		const tagsArray = formData.tags
+			.split(",")
+			.map(tag => tag.trim())
+			.filter(tag => tag);
+
+		const post = {
+			title: formData.title,
+			content: formData.content,
+			author: "Elias Sjödin",
+			created_at: new Date().toISOString(),
+			featured_at: formData.featured ? new Date().toISOString() : undefined,
+			tags: tagsArray,
+			summary: formData.summary,
+		};
+
+		savePostDialog.post = post;
+		savePostDialog.open = true;
+	}
 
 	const handleFileChange = (event: Event) => {
 		const input = event.target as HTMLInputElement;
-		if (input.files && input.files[0]) {
-			$formData.thumbnail = input.files[0];
-		}
+		if (!input.files || !input.files[0]) return;
+		$formData.thumbnail = input.files[0];
 	};
 
 	const parseMarkdown = () => marked($formData.content || "");
 
 	beforeNavigate(({ cancel }) => {
+		if (savePostDialog.submitting) return;
 		const isChanged = JSON.stringify($formData) !== JSON.stringify(DEFAULT_DATA.data);
 		if (!isChanged) return;
 		const confirmLeave = confirm("You have unsaved changes. Are you sure you want to leave this page?");
@@ -57,6 +72,8 @@
 <svelte:head>
 	<title>Elias Sjödin | New Page</title>
 </svelte:head>
+
+<SavePostDialog />
 
 <section class="pt-8 px-4 md:pt-12 md:px-6 w-full h-full">
 	<form class="h-full max-w-4xl mx-auto" method="POST" use:enhance>

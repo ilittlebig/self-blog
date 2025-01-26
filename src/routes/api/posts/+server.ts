@@ -7,7 +7,7 @@
 
 import { env } from "$env/dynamic/private";
 import { json } from "@sveltejs/kit";
-import { ScanCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { ScanCommand, PutCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
 import { extractAndValidateToken } from "$lib/utils/server";
 import { ddb } from "$lib/utils/dynamo";
 
@@ -41,6 +41,26 @@ export const POST = async ({ request }) => {
 		};
 		await ddb.send(new PutCommand({ TableName: TABLE_NAME, Item: newPost }));
 		return json(newPost, { status: 201 });
+	} catch (err: any) {
+		return json({ error: err.message }, { status: 500 });
+	}
+};
+
+export const DELETE = async ({ request }) => {
+	try {
+		const authHeader = request.headers.get("Authorization");
+		await extractAndValidateToken(authHeader);
+
+		const { id } = await request.json();
+		if (!id) {
+			return json({ error: "Post ID is required" }, { status: 400 });
+		}
+
+		await ddb.send(new DeleteCommand({
+			TableName: TABLE_NAME,
+			Key: { id },
+		}));
+		return json({ message: "Post deleted successfully" }, { status: 200 });
 	} catch (err: any) {
 		return json({ error: err.message }, { status: 500 });
 	}

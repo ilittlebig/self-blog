@@ -18,9 +18,9 @@ export const formSchema = z.object({
 		.max(500, { message: "The summary cannot exceed 500 characters" }),
 	tags: z
 		.string()
-		.transform(value => value.split(",").map(tag => tag.trim()).filter(tag => tag))
-		.refine(tags => Array.isArray(tags) && tags.length > 0, {
-			message: "At least one tag is required",
+		.min(1, { message: "At least one tag is required" })
+		.regex(/^[a-zA-Z0-9, ]*$/, {
+			message: "Tags must be a comma-separated list of alphanumeric words",
 		}),
 	thumbnail: z
 		.instanceof(File, { message: "You must select a file" })

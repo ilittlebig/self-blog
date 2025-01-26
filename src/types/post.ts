@@ -14,4 +14,5 @@ export interface Post {
 	featured_at?: string;
 	tags: string[];
 	summary: string;
+	status: "published" | "draft";
 }

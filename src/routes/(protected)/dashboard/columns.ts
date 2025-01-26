@@ -19,11 +19,11 @@ export const columns: ColumnDef<Post>[] = [
 		id: "status",
 		header: "Status",
 		size: 60,
-		cell: () => {
-			const value: string = "Published";//row.getValue("status");
+		cell: ({ row }) => {
+			const value: string = row.original.status;
 			return renderComponent(DataTable.BadgeCell, {
 				value,
-				variant: "outline"
+				variant: value === "published" ? "default" : "outline"
 			});
 		},
 	},
@@ -42,7 +42,7 @@ export const columns: ColumnDef<Post>[] = [
 	{
 		accessorFn: (row: Post) => formatDate(row.created_at),
 		header: "Created",
-		size: 100,
+		size: 110,
 	},
 	{
 		id: "actions",

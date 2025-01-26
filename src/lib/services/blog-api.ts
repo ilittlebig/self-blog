@@ -15,7 +15,7 @@ const request = async (method: string, endpoint: string, body?: any, requireAuth
 	if (requireAuth) {
 		const { tokens } = await getCurrentSession();
 		const accessToken = tokens.accessToken.toString();
-		headers["Authorization"] = accessToken;
+		headers["Authorization"] = `Bearer ${accessToken}`;
 	}
 
 	const response = await fetch("/api" + endpoint, {
@@ -32,5 +32,5 @@ const request = async (method: string, endpoint: string, body?: any, requireAuth
 
 export const GET = async (endpoint: string) => await request("GET", endpoint, undefined, false);
 export const POST = async (endpoint: string, body: any) => await request("POST", endpoint, body);
-export const DELETE = async (endpoint: string) => await request("DELETE", endpoint);
+export const DELETE = async (endpoint: string, body: any) => await request("DELETE", endpoint, body);
 export const PATCH = async (endpoint: string, body: any) => await request("PATCH", endpoint, body);

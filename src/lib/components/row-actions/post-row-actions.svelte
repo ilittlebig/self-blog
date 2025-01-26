@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { Ellipsis } from "lucide-svelte";
+	import { DELETE, GET } from "$lib/services/blog-api";
+	import { blogStore } from "$lib/stores/blog-store.svelte";
 	import { buttonVariants } from "$lib/components/ui/button";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
 	import DeleteDialog from "$lib/components/dialogs/delete-dialog.svelte";
@@ -13,7 +15,8 @@
 	let { post }: Props = $props();
 
 	const handleDeleteConfirm = async () => {
-		console.log("delete post: ", post);
+		await DELETE("/posts", { id: post.id });
+		blogStore.posts = await GET("/posts");
 		isOpen = false;
 	}
 </script>

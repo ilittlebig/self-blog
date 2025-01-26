@@ -1,14 +1,9 @@
 <script lang="ts">
+	import { blogStore } from "$lib/stores/blog-store.svelte";
 	import { ScrollArea } from "$lib/components/ui/scroll-area";
 	import { Button } from "$lib/components/ui/button";
 	import { DataTable } from "$lib/components/data-table";
 	import { columns } from "./columns";
-	import type { Post } from "types/post";
-
-	interface Props {
-		data: { posts: Post[] };
-	}
-	let { data }: Props = $props();
 </script>
 
 <svelte:head>
@@ -21,7 +16,7 @@
 			<h1 class="text-2xl font-bold">Dashboard</h1>
 			<Button href="/dashboard/new">New Post</Button>
 		</div>
-		<DataTable.Provider data={data.posts} {columns}>
+		<DataTable.Provider data={blogStore.posts} {columns}>
 			<ScrollArea orientation="horizontal" class="w-full">
 				<DataTable.Table class="table-auto" />
 			</ScrollArea>
