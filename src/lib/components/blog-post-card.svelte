@@ -15,7 +15,7 @@
 	aria-label={"Read more about " + post.title}
 >
 	<img
-		src="/photo.jpeg"
+		src={post.thumbnail}
 		alt="Blog post thumnail"
 		class="rounded-t-lg h-56 lg:h-64 object-cover"
 	/>

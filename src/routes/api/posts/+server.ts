@@ -5,13 +5,23 @@
  * Created: 2025-01-23
  */
 
+import { PUBLIC_AWS_REGION } from "$env/static/public";
 import { env } from "$env/dynamic/private";
 import { json } from "@sveltejs/kit";
 import { ScanCommand, PutCommand, DeleteCommand } from "@aws-sdk/lib-dynamodb";
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { extractAndValidateToken } from "$lib/utils/server";
 import { ddb } from "$lib/utils/dynamo";
 
 const TABLE_NAME = env.BLOG_POSTS_TABLE_NAME;
+
+const s3 = new S3Client({
+	credentials: {
+		accessKeyId: env.AWS_ACCESS_KEY_ID,
+		secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+	},
+	region: env.AWS_REGION,
+});
 
 export const GET = async () => {
 	try {
@@ -51,10 +61,20 @@ export const DELETE = async ({ request }) => {
 		const authHeader = request.headers.get("Authorization");
 		await extractAndValidateToken(authHeader);
 
-		const { id } = await request.json();
+		const { id, thumbnail } = await request.json();
 		if (!id) {
 			return json({ error: "Post ID is required" }, { status: 400 });
 		}
+
+		const fileKey = thumbnail.replace(
+			`https://${env.AWS_BUCKET_NAME}.s3.${PUBLIC_AWS_REGION}.amazonaws.com/`,
+			""
+		);
+
+		await s3.send(new DeleteObjectCommand({
+			Bucket: env.AWS_BUCKET_NAME,
+			Key: fileKey,
+		}));
 
 		await ddb.send(new DeleteCommand({
 			TableName: TABLE_NAME,

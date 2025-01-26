@@ -41,11 +41,10 @@
 		const post = {
 			title: formData.title,
 			content: formData.content,
-			author: "Elias Sjödin",
-			created_at: new Date().toISOString(),
-			featured_at: formData.featured ? new Date().toISOString() : undefined,
 			tags: tagsArray,
 			summary: formData.summary,
+			featured: formData.featured,
+			thumbnail: formData.thumbnail,
 		};
 
 		savePostDialog.post = post;

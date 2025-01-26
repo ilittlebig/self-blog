@@ -1,9 +1,9 @@
 <script module>
-	import type { Post } from "types/post";
+	import type { EditablePost } from "types/post";
 	interface Props {
 		open: boolean;
 		submitting: boolean;
-		post?: Omit<Post, "status" | "id">;
+		post?: EditablePost;
 	}
 
 	export let savePostDialog = $state<Props>({
@@ -16,17 +16,35 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { POST } from "$lib/services/blog-api";
+	import { uploadFileToS3 } from "$lib/utils/s3";
 	import { Button } from "$lib/components/ui/button";
 	import * as Dialog from "$lib/components/ui/dialog";
-  import * as Alert from "$lib/components/ui/alert";
+	import * as Alert from "$lib/components/ui/alert";
 
 	let error: string | undefined = $state();
+
+	const uploadThumbnail = async (thumbnail: File): Promise<string> => {
+		try {
+			return await uploadFileToS3(thumbnail);
+		} catch (err: any) {
+			console.log(err);
+			throw new Error("Failed to upload thumbnail. Please try again.");
+		}
+	};
 
 	const publish = async (status: string) => {
 		try {
 			savePostDialog.submitting = true;
+			if (savePostDialog.post?.thumbnail instanceof File) {
+				const thumbnailUrl = await uploadThumbnail(savePostDialog.post.thumbnail);
+				savePostDialog.post.thumbnail = thumbnailUrl;
+			}
+
+			const featured = savePostDialog.post?.featured;
 			await POST("/posts", {
 				...savePostDialog.post,
+				created_at: new Date().toISOString(),
+				featured_at: featured ? new Date().toISOString() : undefined,
 				status,
 			});
 
@@ -61,10 +79,10 @@
 
 		<Dialog.Footer>
 			<Button variant="ghost" onclick={cancel}>Cancel</Button>
-			<Button variant="outline" onclick={() => publish("draft")}>
+			<Button variant="outline" onclick={() => publish("draft")} disabled={savePostDialog.submitting}>
 				Save as Draft
 			</Button>
-			<Button onclick={() => publish("published")}>
+			<Button onclick={() => publish("published")} disabled={savePostDialog.submitting}>
 				Publish Now
 			</Button>
 		</Dialog.Footer>

@@ -7,10 +7,17 @@
 
 import { getCurrentSession } from "@ilittlebig/easy-auth";
 
-const request = async (method: string, endpoint: string, body?: any, requireAuth: boolean = true) => {
-	let headers: Record<string, string> = {
-		"Content-Type": "application/json",
-	};
+const request = async (
+	method: string,
+	endpoint: string,
+	body?: any,
+	requireAuth: boolean = true,
+	contentType: string = "application/json"
+) => {
+	let headers: Record<string, string> = {};
+	if (contentType !== "multipart/form-data") {
+		headers["Content-Type"] = contentType;
+	}
 
 	if (requireAuth) {
 		const { tokens } = await getCurrentSession();
@@ -21,7 +28,7 @@ const request = async (method: string, endpoint: string, body?: any, requireAuth
 	const response = await fetch("/api" + endpoint, {
 		method,
 		headers,
-		body: body ? JSON.stringify(body) : undefined,
+		body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
 	});
 
 	if (!response.ok) {
@@ -31,6 +38,9 @@ const request = async (method: string, endpoint: string, body?: any, requireAuth
 };
 
 export const GET = async (endpoint: string) => await request("GET", endpoint, undefined, false);
-export const POST = async (endpoint: string, body: any) => await request("POST", endpoint, body);
-export const DELETE = async (endpoint: string, body: any) => await request("DELETE", endpoint, body);
-export const PATCH = async (endpoint: string, body: any) => await request("PATCH", endpoint, body);
+export const POST = async (endpoint: string, body: any, contentType?: string) =>
+	await request("POST", endpoint, body, true, contentType);
+export const DELETE = async (endpoint: string, body: any) =>
+	await request("DELETE", endpoint, body, true);
+export const PATCH = async (endpoint: string, body: any, contentType?: string) =>
+	await request("PATCH", endpoint, body, true, contentType);

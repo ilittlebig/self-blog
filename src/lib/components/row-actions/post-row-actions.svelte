@@ -15,7 +15,11 @@
 	let { post }: Props = $props();
 
 	const handleDeleteConfirm = async () => {
-		await DELETE("/posts", { id: post.id });
+		await DELETE("/posts", {
+			id: post.id,
+			thumbnail: post.thumbnail,
+		});
+
 		blogStore.posts = await GET("/posts");
 		isOpen = false;
 	}

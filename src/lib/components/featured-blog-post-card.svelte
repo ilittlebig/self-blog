@@ -10,7 +10,7 @@
 
 <div class="p-0 md:p-4 md:p-6 bg-card border rounded-lg flex flex-col md:flex-row md:gap-4 md:gap-6">
 	<img
-		src="/photo.jpeg"
+		src={post.thumbnail}
 		alt="Featured Post"
 		class="w-full md:w-1/3 h-56 md:h-60 object-cover rounded-t-lg md:rounded-lg"
 	/>

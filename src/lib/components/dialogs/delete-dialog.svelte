@@ -3,6 +3,7 @@
 	import * as AlertDialog from "$lib/components/ui/alert-dialog";
   import * as Alert from "$lib/components/ui/alert";
 
+	let submitting: boolean = $state(false);
 	let error: string | undefined = $state();
 
 	interface Props {
@@ -23,9 +24,12 @@
 
 	const handleConfirm = async () => {
 		try {
+			submitting = true;
 			await onconfirm();
 		} catch (err: any) {
 			error = err.message;
+		} finally {
+			submitting = false;
 		}
 	}
 
@@ -52,9 +56,9 @@
 
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-				<AlertDialog.Action onclick={handleConfirm} class={buttonVariants({ variant: "destructive" })}>
-					{actionLabel}
-				</AlertDialog.Action>
+			<AlertDialog.Action onclick={handleConfirm} disabled={submitting} class={buttonVariants({ variant: "destructive" })}>
+				{actionLabel}
+			</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

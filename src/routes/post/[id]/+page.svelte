@@ -30,7 +30,7 @@
 		← Back
 	</button>
 	<img
-		src="/photo.jpeg"
+		src={data.post.thumbnail}
 		alt="Blog post thumbnail"
 		class="rounded-lg mb-3 md:mb-6 shadow-md w-full h-[250px] md:h-[350px] lg:h-[450px] object-cover"
 	/>

@@ -15,4 +15,14 @@ export interface Post {
 	tags: string[];
 	summary: string;
 	status: "published" | "draft";
+	thumbnail: string;
+}
+
+export interface EditablePost {
+	title: string;
+	content: string;
+	tags: string[];
+	summary: string;
+	featured?: boolean;
+	thumbnail: File | string;
 }
