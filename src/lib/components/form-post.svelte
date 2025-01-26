@@ -83,7 +83,13 @@
 <section class="pt-8 px-4 md:pt-12 md:px-6 w-full h-full">
 	<form class="h-full max-w-4xl mx-auto" method="POST" use:enhance>
 		<div class="flex justify-between items-center mb-6">
-			<h1 class="text-2xl font-bold">New Post</h1>
+			<h1 class="text-2xl font-bold">
+				{#if initialData.id}
+					Edit Post
+				{:else}
+					New Post
+				{/if}
+			</h1>
 			<div class="flex gap-x-2">
 				<Button variant="outline" onclick={() => goto("/dashboard")}>
 					Cancel Changes

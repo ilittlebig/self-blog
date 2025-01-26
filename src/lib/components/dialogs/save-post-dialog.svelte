@@ -27,8 +27,7 @@
 	const uploadThumbnail = async (thumbnail: File): Promise<string> => {
 		try {
 			return await uploadFileToS3(thumbnail);
-		} catch (err: any) {
-			console.log(err);
+		} catch {
 			throw new Error("Failed to upload thumbnail. Please try again.");
 		}
 	};
