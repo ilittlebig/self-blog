@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import { CircleUser } from "lucide-svelte";
 	import { Button } from "$lib/components/ui/button";
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
@@ -27,6 +28,10 @@
 				<p class="text-muted-foreground text-xs leading-none">elias@example.com</p>
 			</div>
 		</DropdownMenu.Label>
+		<DropdownMenu.Separator />
+		<DropdownMenu.Item onSelect={() => goto("/dashboard")}>
+			Dashboard
+		</DropdownMenu.Item>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item onSelect={() => signOutDialog.open = true}>
 			Sign Out
