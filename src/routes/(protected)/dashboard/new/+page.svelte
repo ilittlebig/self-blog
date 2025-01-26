@@ -95,7 +95,7 @@
 								<Form.Label>Title</Form.Label>
 								<Input
 									placeholder="Enter your post title here..."
-									class="w-1/2"
+									class="w-full md:w-1/2"
 									bind:value={$formData.title}
 								/>
 							</Form.Control>
@@ -106,7 +106,7 @@
 								<Form.Label>Thumbnail</Form.Label>
 								<Input
 									type="file"
-									class="w-1/2"
+									class="w-full md:w-1/2"
 									accept="image/jpeg, image/png"
 									onchange={handleFileChange}
 								/>
@@ -118,7 +118,7 @@
 								<Form.Label>Tags</Form.Label>
 								<Input
 									placeholder="Svelte,Tutorial,TypeScript"
-									class="w-1/2"
+									class="w-full md:w-1/2"
 									bind:value={$formData.tags}
 								/>
 							</Form.Control>

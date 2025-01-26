@@ -32,7 +32,7 @@ export const GET = async () => {
 				post.tags = Array.from(post.tags);
 			}
 			return post;
-		});
+		}).filter(post => post.status !== "draft");
 		return json(items, { status: 200 });
 	} catch (err: any) {
 		return json({ error: err.message }, { status: 500 });
