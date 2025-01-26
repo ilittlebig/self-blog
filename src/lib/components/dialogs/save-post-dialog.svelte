@@ -17,6 +17,7 @@
 	import { goto } from "$app/navigation";
 	import { POST, PATCH } from "$lib/services/blog-api";
 	import { uploadFileToS3 } from "$lib/utils/s3";
+	import { getIdTokenContent } from "$lib/utils/auth";
 	import { Button } from "$lib/components/ui/button";
 	import * as Dialog from "$lib/components/ui/dialog";
 	import * as Alert from "$lib/components/ui/alert";
@@ -40,17 +41,32 @@
 				savePostDialog.post.thumbnail = thumbnailUrl;
 			}
 
-			const featured = savePostDialog.post?.featured;
-			const postPayload = {
-				...savePostDialog.post,
-				featured_at: featured ? savePostDialog.post?.featured_at || new Date().toISOString() : null,
+			const { title, content, tags, summary, thumbnail } = savePostDialog.post || {};
+			const postPayload: Record<string, any> = {
+				title,
+				content,
+				tags,
+				summary,
+				thumbnail,
 				status,
 			};
 
+			const featured = savePostDialog.post?.featured;
 			if (savePostDialog.post?.id) {
+				if (featured) {
+					postPayload.featured_at = savePostDialog.post?.featured_at || new Date().toISOString();
+				} else {
+					postPayload.featured_at = null;
+				}
 				await PATCH(`/posts/${savePostDialog.post.id}`, postPayload);
 			} else {
+				if (featured) {
+					postPayload.featured_at = new Date().toISOString();
+				}
+
+				const idToken = await getIdTokenContent();
 				postPayload.created_at = new Date().toISOString();
+				postPayload.author = idToken.name;
 				await POST("/posts", postPayload);
 			}
 

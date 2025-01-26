@@ -24,6 +24,7 @@ export interface EditablePost {
 	content: string;
 	tags: string[];
 	created_at?: string;
+	author?: string;
 	featured_at?: string;
 	summary: string;
 	featured?: boolean;

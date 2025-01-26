@@ -17,9 +17,8 @@ export const GET = async () => {
 	try {
 		const result = await ddb.send(new ScanCommand({
 			TableName: TABLE_NAME,
-			FilterExpression: "attribute_exists(featured_at) AND featured_at > :minFeaturedAt AND #status = :status",
+			FilterExpression: "attribute_exists(featured_at) AND #status = :status",
 			ExpressionAttributeValues: {
-				":minFeaturedAt": { S: "1970-01-01T00:00:00Z" },
 				":status": { S: "published" },
 			},
 			ExpressionAttributeNames: {
