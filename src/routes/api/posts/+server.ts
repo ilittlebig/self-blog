@@ -20,7 +20,7 @@ const s3 = new S3Client({
 		accessKeyId: env.AWS_ACCESS_KEY_ID,
 		secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
 	},
-	region: env.AWS_REGION,
+	region: PUBLIC_AWS_REGION,
 });
 
 export const GET = async () => {
