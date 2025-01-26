@@ -58,7 +58,7 @@ const config: Config = {
 					"accent-foreground": "hsl(var(--sidebar-accent-foreground))",
 					border: "hsl(var(--sidebar-border))",
 					ring: "hsl(var(--sidebar-ring))",
-        		},
+						},
 			},
 			borderRadius: {
 				xl: "calc(var(--radius) + 4px)",
@@ -67,6 +67,8 @@ const config: Config = {
 				sm: "calc(var(--radius) - 4px)"
 			},
 			fontFamily: {
+        title: ['"Playfair Display"', 'serif'],
+        logo: ['"DM Sans"', 'serif'],
 				sans: [...fontFamily.sans]
 			},
 			keyframes: {
@@ -84,13 +86,28 @@ const config: Config = {
 				},
 			},
 			animation: {
-        		"accordion-down": "accordion-down 0.2s ease-out",
-        		"accordion-up": "accordion-up 0.2s ease-out",
-       			"caret-blink": "caret-blink 1.25s ease-out infinite",
-      		},
+				"accordion-down": "accordion-down 0.2s ease-out",
+				"accordion-up": "accordion-up 0.2s ease-out",
+				"caret-blink": "caret-blink 1.25s ease-out infinite",
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						h1: { marginBottom: "0.5rem" },
+						h2: { marginBottom: "0.5rem", marginTop: "1rem" },
+						p: { marginBottom: "0.5rem" },
+						ul: { marginBottom: "0.5rem" },
+						pre: { marginBottom: "1rem", marginTop: "1rem" },
+						code: { backgroundColor: "#f5f5f5", padding: "0.2rem 0.4rem" },
+					},
+				},
+			},
 		},
 	},
-	plugins: [tailwindcssAnimate],
+	plugins: [
+		tailwindcssAnimate,
+		require("@tailwindcss/typography"),
+	],
 };
 
 export default config;
