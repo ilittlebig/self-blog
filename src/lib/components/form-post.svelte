@@ -201,7 +201,7 @@
 			</Tabs.Content>
 			<Tabs.Content value="preview">
 				<div class="container mx-auto flex flex-col gap-y-6 md:p-6 lg:w-[700px] max-w-[700px] py-4 px-0">
-					{#if typeof $formData.thumbnail === "string"}
+					{#if typeof $formData.thumbnail === "string" && $formData.thumbnail.trim() !== ""}
 						<img
 							src={$formData.thumbnail}
 							alt="Blog post thumbnail"
